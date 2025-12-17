@@ -1,4 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Request } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+  Request,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { CoursesService } from './courses.service.js';
 import { CreateCourseDto } from './dto/create-course.dto.js';
 import { UpdateCourseDto } from './dto/update-course.dto.js';
@@ -14,7 +25,7 @@ export class CoursesController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.INSTRUCTOR)
   @Post()
-  create(@Body() createCourseDto: CreateCourseDto,@Request() req) {
+  create(@Body() createCourseDto: CreateCourseDto, @Request() req) {
     return this.coursesService.create(createCourseDto, req.user.userId);
   }
 
@@ -26,14 +37,19 @@ export class CoursesController {
 
   @UseGuards(JwtAuthGuard)
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.coursesService.findOne(+id);
+  findOne(@Param('id', ParseIntPipe) id: number, @Request() req) {
+    // Pass userId and role for ownership check
+    return this.coursesService.findOne(id, req.user.userId, req.user.role);
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.INSTRUCTOR)
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCourseDto: UpdateCourseDto, @Request() req) {
+  update(
+    @Param('id') id: string,
+    @Body() updateCourseDto: UpdateCourseDto,
+    @Request() req,
+  ) {
     return this.coursesService.update(+id, updateCourseDto, req.user.userId);
   }
 

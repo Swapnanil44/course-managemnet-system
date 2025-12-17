@@ -30,17 +30,26 @@ export class CoursesService {
     });
   }
 
-  async findOne(id: number) {
+  async findOne(id: number, userId: number, role: Role) {
     const course = await this.prisma.course.findUnique({
       where: { id },
       include: { lessons: true },
     });
+
     if (!course) throw new NotFoundException(`Course with ID ${id} not found`);
+
+    // SECURITY CHECK: If Instructor, must own the course
+    if (role === Role.INSTRUCTOR && course.instructorId !== userId) {
+      throw new ForbiddenException('You can only view details of your own courses');
+    }
+
     return course;
   }
 
   async update(id: number, updateCourseDto: UpdateCourseDto, userId: number) {
-    const course = await this.findOne(id);
+    const course = await this.prisma.course.findUnique({where: { id }});
+
+    if (!course) throw new NotFoundException(`Course with ID ${id} not found`);
 
     if (course.instructorId !== userId) {
       throw new ForbiddenException('You can only update your own courses');
@@ -53,7 +62,9 @@ export class CoursesService {
   }
 
   async remove(id: number,userId: number) {
-    const course = await this.findOne(id);
+    const course = await this.prisma.course.findUnique({where: { id }});
+
+    if (!course) throw new NotFoundException(`Course with ID ${id} not found`);
 
     if (course.instructorId !== userId) {
       throw new ForbiddenException('You can only delete your own courses');
