@@ -32,8 +32,8 @@ Follow the steps below to run the project locally.
 ## 1️⃣ Clone the Repository
 
 ```bash
-git clone <YOUR_REPO_URL_HERE>
-cd <YOUR_PROJECT_DIRECTORY_NAME>
+git clone https://github.com/Swapnanil44/course-managemnet-system.git
+cd course-managemnet-system
 ```
 
 ---
