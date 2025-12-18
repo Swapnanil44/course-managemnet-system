@@ -27,32 +27,36 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Response Interceptor: Handle Token Refresh
+
+
+// Handle Token Refresh
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
 
-    // If error is 401 and we haven't tried to refresh yet
+    // when refresh token fails
+    if (originalRequest.url?.includes('/auth/refresh')) {
+      return Promise.reject(error);
+    }
+    
+    // If 401 and first retry
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
       try {
-        // Attempt to refresh the token
-        const { data } = await axios.get(`${API_URL}/auth/refresh`, {
-          withCredentials: true, // Send the cookie
+        // refresh the token
+        const { data } = await axios.post(`${API_URL}/auth/refresh`, {}, {
+          withCredentials: true,
         });
 
-        // Update the token in memory
         setAccessToken(data.access_token);
 
-        // Update the header for the retry
         originalRequest.headers.Authorization = `Bearer ${data.access_token}`;
 
-        // Retry the original request
         return api(originalRequest);
       } catch (refreshError) {
-        // If refresh fails (token expired completely), logout
+        // If refresh fails then logout
         setAccessToken(null);
         window.location.href = '/login'; 
         return Promise.reject(refreshError);

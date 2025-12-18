@@ -9,6 +9,7 @@ import * as bcrypt from 'bcrypt';
 import { Prisma } from '../generated/prisma/client.js'; // Import generated types
 import { LoginDto } from './dto/login.dto.js';
 import { ConfigService } from '@nestjs/config';
+import * as crypto from 'crypto'
 
 @Injectable()
 export class AuthService {
@@ -47,10 +48,10 @@ export class AuthService {
     if (!user) throw new UnauthorizedException('Invalid credentials');
 
     const isPasswordValid = await bcrypt.compare(
-      loginDto.password, 
-      user.password
+      loginDto.password,
+      user.password,
     );
-    
+
     if (!isPasswordValid) {
       throw new UnauthorizedException('Invalid credentials');
     }
@@ -61,18 +62,18 @@ export class AuthService {
     return {
       access_token: tokens.access_token,
       refresh_token: tokens.refresh_token,
-      user: { 
-        id: user.id, 
-        email: user.email, 
-        role: user.role 
-      }
+      user: {
+        id: user.id,
+        email: user.email,
+        role: user.role,
+      },
     };
   }
 
   async refreshTokens(refreshToken: string) {
     const storedToken = await this.prisma.refreshToken.findUnique({
       where: { token: refreshToken },
-      include: { user: true }
+      include: { user: true },
     });
 
     if (!storedToken) {
@@ -80,8 +81,8 @@ export class AuthService {
     }
 
     if (new Date() > storedToken.expiresAt) {
-      await this.prisma.refreshToken.delete({ 
-        where: { id: storedToken.id } 
+      await this.prisma.refreshToken.deleteMany({
+        where: { id: storedToken.id },
       });
       throw new UnauthorizedException('Refresh token expired');
     }
@@ -91,20 +92,20 @@ export class AuthService {
         secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
       });
     } catch (error) {
-      await this.prisma.refreshToken.delete({ 
-        where: { id: storedToken.id } 
+      await this.prisma.refreshToken.deleteMany({
+        where: { id: storedToken.id },
       });
       throw new UnauthorizedException('Invalid refresh token');
     }
 
-    await this.prisma.refreshToken.delete({ 
-      where: { id: storedToken.id } 
+    await this.prisma.refreshToken.deleteMany({
+      where: { id: storedToken.id },
     });
 
     const tokens = await this.generateTokens(
       storedToken.user.id,
       storedToken.user.email,
-      storedToken.user.role
+      storedToken.user.role,
     );
 
     await this.storeRefreshToken(storedToken.user.id, tokens.refresh_token);
@@ -115,20 +116,22 @@ export class AuthService {
       user: {
         id: storedToken.user.id,
         email: storedToken.user.email,
-        role: storedToken.user.role
-      }
+        role: storedToken.user.role,
+      },
     };
   }
 
   async logout(refreshToken: string) {
     await this.prisma.refreshToken.deleteMany({
-      where: { token: refreshToken }
+      where: { token: refreshToken },
     });
     return { message: 'Logged out successfully' };
   }
-  
+
   private async generateTokens(userId: number, email: string, role: string) {
-    const payload = { sub: userId, email, role };
+    
+    const uniqueId = crypto.randomUUID();
+    const payload = { sub: userId, email, role, jti: uniqueId };
 
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtService.signAsync(payload, {
@@ -162,26 +165,26 @@ export class AuthService {
 
   async getActiveSessions(userId: number) {
     const sessions = await this.prisma.refreshToken.findMany({
-      where: { 
+      where: {
         userId,
-        expiresAt: { gt: new Date() }
+        expiresAt: { gt: new Date() },
       },
       select: {
         id: true,
         createdAt: true,
         expiresAt: true,
       },
-      orderBy: { createdAt: 'desc' }
+      orderBy: { createdAt: 'desc' },
     });
     return sessions;
   }
 
   async revokeSession(userId: number, tokenId: number) {
     const result = await this.prisma.refreshToken.deleteMany({
-      where: { 
+      where: {
         id: tokenId,
-        userId
-      }
+        userId,
+      },
     });
 
     if (result.count === 0) {
