@@ -3,7 +3,10 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { api } from '../lib/api';
-import { Save, X } from 'lucide-react';
+import { Save, X, Type, AlignLeft } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 // --- Shared Types ---
 export interface Lesson {
@@ -14,7 +17,7 @@ export interface Lesson {
 }
 
 interface LessonFormProps {
-  courseId: string; // We need the ID of the parent course to create a lesson
+  courseId: string;
   initialData: Lesson | null;
   onCancel: () => void;
   onSuccess: () => void;
@@ -69,54 +72,94 @@ export default function LessonForm({ courseId, initialData, onCancel, onSuccess 
   };
 
   return (
-    <div className="mb-8 rounded-lg border bg-white p-6 shadow-sm ring-1 ring-indigo-100">
-      <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-lg font-semibold text-gray-900">
-          {initialData ? 'Edit Lesson' : 'Create New Lesson'}
-        </h2>
-        <button type="button" onClick={onCancel} className="text-gray-400 hover:text-gray-600">
-          <X size={24} />
+    <div className="w-full">
+      {/* Header */}
+      <div className="mb-6 flex items-center justify-between">
+        <div>
+          <h2 className="text-lg font-bold tracking-tight text-zinc-900">
+            {initialData ? 'Edit Lesson' : 'Create New Lesson'}
+          </h2>
+          <p className="text-sm text-zinc-500">
+            {initialData ? 'Update the lesson content below.' : 'Add a new lesson to your course curriculum.'}
+          </p>
+        </div>
+        <button 
+          type="button" 
+          onClick={onCancel} 
+          className="rounded-full p-2 text-zinc-400 hover:bg-zinc-100 hover:text-zinc-900 transition-colors"
+        >
+          <X className="h-5 w-5" />
         </button>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Lesson Title</label>
-          <input
-            {...register('title')}
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-            placeholder="e.g., Introduction to Hooks"
-          />
-          {errors.title && <p className="mt-1 text-sm text-red-600">{errors.title.message}</p>}
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+        
+        {/* Title Field */}
+        <div className="space-y-1.5">
+          <Label htmlFor="title" className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 ml-0.5">
+            Lesson Title
+          </Label>
+          <div className="relative group">
+            <Type className="absolute left-3 top-3 h-4 w-4 text-zinc-400 group-focus-within:text-zinc-900 transition-colors" />
+            <Input
+              id="title"
+              {...register('title')}
+              className="pl-10 h-10 rounded-lg border-zinc-200 bg-white text-sm text-zinc-900 focus:border-zinc-900 focus:ring-1 focus:ring-zinc-900 transition-all shadow-sm"
+              placeholder="e.g., Introduction to Hooks"
+            />
+          </div>
+          {errors.title && (
+            <p className="text-[10px] font-medium text-red-600 pl-1 mt-1">{errors.title.message}</p>
+          )}
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Content</label>
-          <textarea
-            {...register('content')}
-            rows={6}
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-            placeholder="Write your lesson content here..."
-          />
-          {errors.content && <p className="mt-1 text-sm text-red-600">{errors.content.message}</p>}
+        {/* Content Field */}
+        <div className="space-y-1.5">
+          <Label htmlFor="content" className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 ml-0.5">
+            Content
+          </Label>
+          <div className="relative group">
+            <AlignLeft className="absolute left-3 top-3 h-4 w-4 text-zinc-400 group-focus-within:text-zinc-900 transition-colors" />
+            <textarea
+              id="content"
+              {...register('content')}
+              rows={6}
+              className="flex min-h-[160px] w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 pl-10 text-sm text-zinc-900 shadow-sm placeholder:text-zinc-400 focus:border-zinc-900 focus:outline-none focus:ring-1 focus:ring-zinc-900 disabled:cursor-not-allowed disabled:opacity-50 transition-all resize-none"
+              placeholder="Write your lesson content here..."
+            />
+          </div>
+          {errors.content && (
+            <p className="text-[10px] font-medium text-red-600 pl-1 mt-1">{errors.content.message}</p>
+          )}
         </div>
 
+        {/* Action Buttons */}
         <div className="flex justify-end gap-3 pt-2">
-          <button
+          <Button
             type="button"
+            variant="outline"
             onClick={onCancel}
-            className="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+            className="h-9 border-zinc-200 text-zinc-700 hover:bg-zinc-50 hover:text-zinc-900"
           >
             Cancel
-          </button>
-          <button
+          </Button>
+          <Button
             type="submit"
             disabled={isSubmitting}
-            className="inline-flex items-center gap-2 rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 disabled:opacity-50"
+            className="h-9 gap-2 bg-zinc-900 text-white hover:bg-zinc-800 shadow-sm"
           >
-            <Save size={16} />
-            {isSubmitting ? 'Saving...' : 'Save Lesson'}
-          </button>
+            {isSubmitting ? (
+              <>
+                <div className="h-3 w-3 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                Saving...
+              </>
+            ) : (
+              <>
+                <Save className="h-4 w-4" />
+                Save Lesson
+              </>
+            )}
+          </Button>
         </div>
       </form>
     </div>

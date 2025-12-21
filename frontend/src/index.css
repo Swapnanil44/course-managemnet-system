@@ -1,9 +1,14 @@
+/* 1. Import the font at the very top */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  /* 2. Define the font-family here to override the default 'sans' */
+  --font-sans: "Plus Jakarta Sans", sans-serif;
+
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -118,6 +123,7 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    /* 3. Added 'font-sans' and 'antialiased' for premium text rendering */
+    @apply bg-background text-foreground font-sans antialiased;
   }
 }

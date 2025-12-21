@@ -2,10 +2,14 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { api } from "../lib/api"; // Adjust path as needed
-import { X } from "lucide-react";
+import { api } from "../lib/api";
+import { X, Type, AlignLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea"; 
 
-// Types (You might want to move this to a types.ts file eventually)
+// Types
 export interface Course {
   id: number;
   title: string;
@@ -14,7 +18,7 @@ export interface Course {
 
 // Props Definition
 interface CourseFormProps {
-  initialData: Course | null; // If null, we are creating. If object, we are editing.
+  initialData: Course | null;
   onCancel: () => void;
   onSuccess: () => void;
 }
@@ -59,7 +63,7 @@ export default function CourseForm({ initialData, onCancel, onSuccess }: CourseF
         // Create Mode
         await api.post("/courses", data);
       }
-      onSuccess(); // Tell parent to refresh
+      onSuccess(); 
     } catch (error) {
       console.error("Operation failed", error);
       alert("Failed to save course");
@@ -67,68 +71,92 @@ export default function CourseForm({ initialData, onCancel, onSuccess }: CourseF
   };
 
   return (
-    <div className="mb-8 rounded-lg border bg-white p-6 shadow-sm">
-      <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-xl font-semibold">
-          {initialData ? "Edit Course" : "Create New Course"}
-        </h2>
+    <div className="w-full">
+      {/* Header Section */}
+      <div className="mb-6 flex items-center justify-between">
+        <div>
+          <h2 className="text-lg font-bold tracking-tight text-zinc-900">
+            {initialData ? "Edit Course" : "Create New Course"}
+          </h2>
+          <p className="text-sm text-zinc-500">
+            {initialData ? "Update the course details below." : "Fill in the details to create a new course."}
+          </p>
+        </div>
         <button
           onClick={onCancel}
-          className="text-gray-500 hover:text-gray-700"
+          className="rounded-full p-2 text-zinc-400 hover:bg-zinc-100 hover:text-zinc-900 transition-colors"
         >
-          <X size={24} />
+          <X className="h-5 w-5" />
         </button>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+        
+        {/* Course Title Field */}
+        <div className="space-y-1.5">
+          <Label htmlFor="title" className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 ml-0.5">
             Course Title
-          </label>
-          <input
-            {...register("title")}
-            className="mt-1 block w-full rounded-md border border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-            placeholder="e.g., Advanced NestJS Patterns"
-          />
+          </Label>
+          <div className="relative group">
+            <Type className="absolute left-3 top-3 h-4 w-4 text-zinc-400 group-focus-within:text-zinc-900 transition-colors" />
+            <Input
+              id="title"
+              {...register("title")}
+              placeholder="e.g., Advanced React Patterns"
+              className="pl-10 h-10 rounded-lg border-zinc-200 bg-white text-sm text-zinc-900 focus:border-zinc-900 focus:ring-1 focus:ring-zinc-900 transition-all shadow-sm"
+            />
+          </div>
           {errors.title && (
-            <p className="text-sm text-red-600">{errors.title.message}</p>
+            <p className="text-[10px] font-medium text-red-600 pl-1 mt-1">{errors.title.message}</p>
           )}
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
+        {/* Description Field */}
+        <div className="space-y-1.5">
+          <Label htmlFor="description" className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 ml-0.5">
             Description
-          </label>
-          <textarea
-            {...register("description")}
-            rows={3}
-            className="mt-1 block w-full rounded-md border border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-            placeholder="What will students learn?"
-          />
+          </Label>
+          <div className="relative group">
+            <AlignLeft className="absolute left-3 top-3 h-4 w-4 text-zinc-400 group-focus-within:text-zinc-900 transition-colors" />
+            <textarea
+              id="description"
+              {...register("description")}
+              rows={4}
+              className="flex min-h-[120px] w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 pl-10 text-sm text-zinc-900 shadow-sm placeholder:text-zinc-400 focus:border-zinc-900 focus:outline-none focus:ring-1 focus:ring-zinc-900 disabled:cursor-not-allowed disabled:opacity-50 transition-all resize-none"
+              placeholder="Briefly describe what students will learn in this course..."
+            />
+          </div>
           {errors.description && (
-            <p className="text-sm text-red-600">{errors.description.message}</p>
+            <p className="text-[10px] font-medium text-red-600 pl-1 mt-1">{errors.description.message}</p>
           )}
         </div>
 
-        <div className="flex justify-end gap-3">
-          <button
+        {/* Action Buttons */}
+        <div className="flex justify-end gap-3 pt-2">
+          <Button
             type="button"
+            variant="outline"
             onClick={onCancel}
-            className="rounded-md border border-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-50"
+            className="h-9 border-zinc-200 text-zinc-700 hover:bg-zinc-50 hover:text-zinc-900"
           >
             Cancel
-          </button>
-          <button
+          </Button>
+          <Button
             type="submit"
             disabled={isSubmitting}
-            className="rounded-md bg-indigo-600 px-4 py-2 text-white hover:bg-indigo-700 disabled:opacity-50"
+            className="h-9 bg-zinc-900 text-white hover:bg-zinc-800 shadow-sm"
           >
-            {isSubmitting
-              ? "Saving..."
-              : initialData
-              ? "Update Course"
-              : "Create Course"}
-          </button>
+            {isSubmitting ? (
+              <div className="flex items-center gap-2">
+                <div className="h-3 w-3 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                Saving...
+              </div>
+            ) : initialData ? (
+              "Update Course"
+            ) : (
+              "Create Course"
+            )}
+          </Button>
         </div>
       </form>
     </div>

@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { api } from '../lib/api';
-import { ArrowLeft, Plus, Edit2, Trash2, FileText } from 'lucide-react';
-import LessonForm, { type Lesson } from '../components/LessonForm'; // Import new component
+import { ArrowLeft, Plus, Edit2, Trash2, FileText, ChevronRight, GripVertical } from 'lucide-react';
+import LessonForm, { type Lesson } from '../components/LessonForm'; 
+import { Button } from "@/components/ui/button";
 
 interface CourseData {
   id: number;
@@ -71,80 +72,128 @@ export default function InstructorCourseManager() {
     setEditingLesson(null);
   };
 
-  if (isLoading) return <div className="p-10 text-center">Loading...</div>;
-  if (!course) return <div className="p-10 text-center text-red-600">Course not found</div>;
+  if (isLoading) return (
+    <div className="flex h-screen items-center justify-center bg-white">
+      <div className="h-5 w-5 animate-spin rounded-full border-[2.5px] border-zinc-200 border-t-zinc-900" />
+    </div>
+  );
+
+  if (!course) return (
+    <div className="flex h-screen flex-col items-center justify-center bg-white gap-4">
+        <h2 className="text-xl font-bold text-zinc-900">Course not found</h2>
+        <Link to="/dashboard">
+            <Button variant="outline">Back to Dashboard</Button>
+        </Link>
+    </div>
+  );
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
+    <div className="min-h-screen bg-white relative isolate p-8">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 -z-10 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)]"></div>
+
       <div className="mx-auto max-w-4xl">
-        {/* Header */}
-        <div className="mb-8">
-          <Link to="/dashboard" className="mb-4 flex items-center gap-2 text-sm text-gray-500 hover:text-gray-900">
-            <ArrowLeft size={16} /> Back to Dashboard
+        {/* Header Section */}
+        <div className="mb-10">
+          <Link 
+            to="/dashboard" 
+            className="group mb-6 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-zinc-500 hover:text-zinc-900 transition-colors"
+          >
+            <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" /> 
+            Back to Dashboard
           </Link>
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">{course.title}</h1>
-              <p className="text-gray-500">Manage Lessons</p>
+          
+          <div className="flex items-start justify-between">
+            <div className="space-y-1">
+              <h1 className="text-3xl font-bold tracking-tight text-zinc-950">{course.title}</h1>
+              <p className="text-zinc-500 flex items-center gap-2">
+                <span>Manage Curriculum</span>
+                <ChevronRight className="h-3 w-3 text-zinc-300" />
+                <span className="text-zinc-900 font-medium">{course.lessons.length} Lessons</span>
+              </p>
             </div>
+            
             {!isFormOpen && (
-              <button
+              <Button
                 onClick={handleCreateClick}
-                className="flex items-center gap-2 rounded-md bg-indigo-600 px-4 py-2 text-white hover:bg-indigo-700"
+                className="gap-2 bg-zinc-900 text-white hover:bg-zinc-800 shadow-md transition-all"
               >
-                <Plus size={20} /> Add Lesson
-              </button>
+                <Plus className="h-4 w-4" /> Add Lesson
+              </Button>
             )}
           </div>
         </div>
 
+        {/* Form Area */}
         {isFormOpen && id && (
-          <LessonForm 
-            courseId={id}
-            initialData={editingLesson}
-            onCancel={handleFormCancel}
-            onSuccess={handleFormSuccess}
-          />
+          <div className="mb-8 overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-xl shadow-zinc-200/40 p-6">
+            <LessonForm 
+              courseId={id}
+              initialData={editingLesson}
+              onCancel={handleFormCancel}
+              onSuccess={handleFormSuccess}
+            />
+          </div>
         )}
 
+        {/* Lesson List */}
         <div className="space-y-4">
             {course.lessons.length === 0 && !isFormOpen && (
-                <div className="rounded-lg border border-dashed border-gray-300 p-12 text-center text-gray-500">
-                    No lessons found. Click "Add Lesson" to start creating content.
+                <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-zinc-300 bg-zinc-50/50 py-16 text-center">
+                    <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-white border border-zinc-200 shadow-sm">
+                        <FileText className="h-6 w-6 text-zinc-400" />
+                    </div>
+                    <p className="text-zinc-900 font-medium">No lessons yet</p>
+                    <p className="text-sm text-zinc-500 mt-1">Start building your curriculum by adding a lesson.</p>
                 </div>
             )}
 
-            {course.lessons.map((lesson) => (
+            {course.lessons.map((lesson, index) => (
                 <div 
                     key={lesson.id} 
-                    className={`flex items-start justify-between rounded-lg border bg-white p-5 shadow-sm transition-all ${
-                        editingLesson?.id === lesson.id ? 'ring-2 ring-indigo-500' : 'hover:border-indigo-200'
+                    className={`group relative flex items-start gap-4 rounded-xl border bg-white p-5 transition-all duration-300 ${
+                        editingLesson?.id === lesson.id 
+                            ? 'border-zinc-900 ring-1 ring-zinc-900 shadow-lg' 
+                            : 'border-zinc-200 hover:border-zinc-300 hover:shadow-lg hover:shadow-zinc-200/50'
                     }`}
                 >
-                    <div className="flex gap-4">
-                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-indigo-50 text-indigo-600">
-                            <FileText size={20} />
+                    {/* Index Number / Drag Handle Aesthetic */}
+                    <div className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-zinc-100 bg-zinc-50 text-xs font-bold text-zinc-400">
+                        {(index + 1).toString().padStart(2, '0')}
+                    </div>
+
+                    {/* Content */}
+                    <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1">
+                            <h3 className="font-bold text-zinc-900 group-hover:text-black transition-colors">
+                                {lesson.title}
+                            </h3>
+                            {editingLesson?.id === lesson.id && (
+                                <span className="inline-flex items-center rounded-full bg-zinc-100 px-2 py-0.5 text-[10px] font-medium text-zinc-800">
+                                    Editing
+                                </span>
+                            )}
                         </div>
-                        <div>
-                            <h3 className="font-semibold text-gray-900">{lesson.title}</h3>
-                            <p className="mt-1 text-sm text-gray-500 line-clamp-2">{lesson.content}</p>
-                        </div>
+                        <p className="text-sm text-zinc-500 line-clamp-2 leading-relaxed">
+                            {lesson.content}
+                        </p>
                     </div>
                     
-                    <div className="flex gap-2">
+                    {/* Actions */}
+                    <div className="flex items-center gap-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
                         <button
                             onClick={() => handleEditClick(lesson)}
-                            className="rounded p-2 text-gray-400 hover:bg-gray-100 hover:text-indigo-600"
-                            title="Edit"
+                            className="flex h-8 w-8 items-center justify-center rounded-md text-zinc-400 hover:bg-zinc-100 hover:text-zinc-900 transition-all"
+                            title="Edit Lesson"
                         >
-                            <Edit2 size={18} />
+                            <Edit2 className="h-4 w-4" />
                         </button>
                         <button
                             onClick={() => handleDelete(lesson.id)}
-                            className="rounded p-2 text-gray-400 hover:bg-gray-100 hover:text-red-600"
-                            title="Delete"
+                            className="flex h-8 w-8 items-center justify-center rounded-md text-zinc-400 hover:bg-red-50 hover:text-red-600 transition-all"
+                            title="Delete Lesson"
                         >
-                            <Trash2 size={18} />
+                            <Trash2 className="h-4 w-4" />
                         </button>
                     </div>
                 </div>
