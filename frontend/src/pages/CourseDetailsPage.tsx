@@ -52,7 +52,7 @@ export default function CourseDetailsPage() {
         {/* Main Content Skeleton */}
         <div className="flex-1 p-8 space-y-6">
           <Skeleton className="h-12 w-1/2" />
-          <Skeleton className="h-[400px] w-full rounded-xl" />
+          <Skeleton className="h-100 w-full rounded-xl" />
         </div>
       </div>
     );
@@ -88,7 +88,7 @@ export default function CourseDetailsPage() {
       {/* MAIN CONTENT AREA */}
       <main className="relative flex-1 overflow-y-auto">
         {/* Dotted Background - Applied only to the content area */}
-        <div className="absolute inset-0 -z-10 h-full w-full bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)]"></div>
+        <div className="absolute inset-0 -z-10 h-full w-full bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] bg-size-[16px_16px] mask-[radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)]"></div>
 
         <div className="mx-auto max-w-4xl p-6 md:p-10">
           <LessonViewer

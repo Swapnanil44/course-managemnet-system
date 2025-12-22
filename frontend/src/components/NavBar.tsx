@@ -1,13 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import {
-  LogOut,
-  LayoutDashboard,
-  BookOpen,
-  User,
-  Command,
-  ChevronDown,
-} from "lucide-react";
+import { LogOut, LayoutDashboard, BookOpen, Command } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -76,7 +69,7 @@ export default function Navbar() {
                   </Link>
                 )}
               </div>
-              
+
               {/* User Profile Dropdown */}
               <div className="flex items-center gap-4 pl-6 border-l border-zinc-200">
                 <DropdownMenu>
@@ -117,7 +110,7 @@ export default function Navbar() {
                         </Link>
                       )}
                     </DropdownMenuItem>
-                    
+
                     <DropdownMenuSeparator />
                     <DropdownMenuItem
                       onClick={handleLogout}

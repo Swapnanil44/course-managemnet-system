@@ -7,7 +7,6 @@ import { X, Type, AlignLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea"; 
 
 // Types
 export interface Course {
@@ -122,7 +121,7 @@ export default function CourseForm({ initialData, onCancel, onSuccess }: CourseF
               id="description"
               {...register("description")}
               rows={4}
-              className="flex min-h-[120px] w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 pl-10 text-sm text-zinc-900 shadow-sm placeholder:text-zinc-400 focus:border-zinc-900 focus:outline-none focus:ring-1 focus:ring-zinc-900 disabled:cursor-not-allowed disabled:opacity-50 transition-all resize-none"
+              className="flex min-h-30 w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 pl-10 text-sm text-zinc-900 shadow-sm placeholder:text-zinc-400 focus:border-zinc-900 focus:outline-none focus:ring-1 focus:ring-zinc-900 disabled:cursor-not-allowed disabled:opacity-50 transition-all resize-none"
               placeholder="Briefly describe what students will learn in this course..."
             />
           </div>

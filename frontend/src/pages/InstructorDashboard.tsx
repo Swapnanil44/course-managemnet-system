@@ -1,24 +1,10 @@
 import { useEffect, useState } from "react";
 import { api } from "../lib/api";
-import {
-  Plus,
-  Trash2,
-  Edit2,
-  BookOpen,
-  Command,
-  MoreHorizontal,
-  ArrowRight,
-} from "lucide-react";
+import { Plus, Trash2, Edit2, BookOpen, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import CourseForm, { type Course } from "../components/CourseForm";
 import { Button } from "@/components/ui/button"; // Assuming you have shadcn button
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 
 export default function InstructorDashboard() {
   const [courses, setCourses] = useState<Course[]>([]);
@@ -72,7 +58,7 @@ export default function InstructorDashboard() {
   return (
     <div className="min-h-screen bg-white relative isolate p-8">
       {/* Background Pattern */}
-      <div className="absolute inset-0 -z-10 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)]"></div>
+      <div className="absolute inset-0 -z-10 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] bg-size-[16px_16px] mask-[radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)]"></div>
 
       <div className="mx-auto max-w-6xl">
         {/* Header Section */}

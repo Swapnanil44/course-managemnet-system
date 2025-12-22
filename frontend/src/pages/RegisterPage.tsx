@@ -53,9 +53,9 @@ export default function RegisterPage() {
   return (
     <div className="flex min-h-screen w-full items-center justify-center bg-white relative isolate p-4">
       {/* Background Pattern */}
-      <div className="absolute inset-0 -z-10 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)]"></div>
+      <div className="absolute inset-0 -z-10 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] bg-size-[16px_16px] mask-[radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)]"></div>
 
-      <Card className="w-full max-w-[440px] border border-zinc-200/60 bg-white shadow-[0px_0px_0px_1px_rgba(9,9,11,0.02),0px_1px_1px_-0.5px_rgba(9,9,11,0.02),0px_3px_3px_-1.5px_rgba(9,9,11,0.02),_0px_6px_6px_-3px_rgba(9,9,11,0.02),0px_12px_12px_-6px_rgba(9,9,11,0.02),0px_24px_24px_-12px_rgba(9,9,11,0.02)] rounded-2xl">
+      <Card className="w-full max-w-110 border border-zinc-200/60 bg-white shadow-[0px_0px_0px_1px_rgba(9,9,11,0.02),0px_1px_1px_-0.5px_rgba(9,9,11,0.02),0px_3px_3px_-1.5px_rgba(9,9,11,0.02),_0px_6px_6px_-3px_rgba(9,9,11,0.02),0px_12px_12px_-6px_rgba(9,9,11,0.02),0px_24px_24px_-12px_rgba(9,9,11,0.02)] rounded-2xl">
         
         {/* Compact Header */}
         <CardHeader className="space-y-1 pb-2 pt-2 text-center">

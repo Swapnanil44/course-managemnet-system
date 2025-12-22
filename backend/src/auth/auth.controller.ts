@@ -104,13 +104,4 @@ export class AuthController {
     return this.authService.getActiveSessions(req.user.userId);
   }
 
-  @Delete('sessions/:id')
-  @UseGuards(JwtAuthGuard)
-  async revokeSession(
-    @Request() req,
-    @Param('id', ParseIntPipe) sessionId: number,
-  ) {
-    return this.authService.revokeSession(req.user.userId, sessionId);
-  }
-  
 }

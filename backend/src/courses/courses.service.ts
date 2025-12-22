@@ -21,7 +21,7 @@ export class CoursesService {
     if (role === Role.INSTRUCTOR) {
       return this.prisma.course.findMany({
         where: { instructorId: userId },
-        include: { lessons: true }, // Optional: include lessons
+        include: { lessons: true }, 
       });
     }
     // Users see everything

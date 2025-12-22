@@ -179,18 +179,4 @@ export class AuthService {
     return sessions;
   }
 
-  async revokeSession(userId: number, tokenId: number) {
-    const result = await this.prisma.refreshToken.deleteMany({
-      where: {
-        id: tokenId,
-        userId,
-      },
-    });
-
-    if (result.count === 0) {
-      throw new UnauthorizedException('Session not found');
-    }
-
-    return { message: 'Session revoked successfully' };
-  }
 }

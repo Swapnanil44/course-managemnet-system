@@ -124,7 +124,7 @@ export default function LessonForm({ courseId, initialData, onCancel, onSuccess 
               id="content"
               {...register('content')}
               rows={6}
-              className="flex min-h-[160px] w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 pl-10 text-sm text-zinc-900 shadow-sm placeholder:text-zinc-400 focus:border-zinc-900 focus:outline-none focus:ring-1 focus:ring-zinc-900 disabled:cursor-not-allowed disabled:opacity-50 transition-all resize-none"
+              className="flex min-h-40 w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 pl-10 text-sm text-zinc-900 shadow-sm placeholder:text-zinc-400 focus:border-zinc-900 focus:outline-none focus:ring-1 focus:ring-zinc-900 disabled:cursor-not-allowed disabled:opacity-50 transition-all resize-none"
               placeholder="Write your lesson content here..."
             />
           </div>

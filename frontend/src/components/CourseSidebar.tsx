@@ -61,7 +61,7 @@ export default function CourseSidebar({
                   onClick={() => onSelectLesson(lesson.id)}
                   className={`group flex items-start gap-3 border-b border-border/50 px-5 py-4 text-left transition-all hover:bg-accent/50 ${
                     isActive
-                      ? "bg-primary/5 border-l-2 border-l-primary pl-[18px]"
+                      ? "bg-primary/5 border-l-2 border-l-primary pl-4.5"
                       : "border-l-2 border-l-transparent"
                   }`}
                 >
