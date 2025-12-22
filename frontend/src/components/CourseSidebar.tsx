@@ -22,7 +22,7 @@ export default function CourseSidebar({
 }: CourseSidebarProps) {
   return (
     <aside className="flex h-full w-80 shrink-0 flex-col border-r border-border bg-card/50 backdrop-blur-sm">
-      {/* Sidebar Header */}
+      
       <div className="flex flex-col border-b border-border p-5">
         <Link
           to="/courses"
@@ -41,7 +41,7 @@ export default function CourseSidebar({
         </p>
       </div>
 
-      {/* Lessons List */}
+      
       <div className="flex-1 overflow-y-auto">
         {lessons.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-12 text-center text-sm text-muted-foreground">

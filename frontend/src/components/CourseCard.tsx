@@ -15,9 +15,7 @@ interface CourseCardProps {
 export default function CourseCard({ course }: CourseCardProps) {
   return (
     <div className="group relative flex flex-col justify-between overflow-hidden rounded-xl border border-border bg-card transition-all duration-300 hover:border-ring/50 hover:shadow-lg hover:shadow-primary/5">
-      {/* Main Content Body */}
       <div className="flex flex-col p-6">
-        {/* Top Row: Icon + ID Badge */}
         <div className="flex items-start justify-between">
           <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-muted/50 text-foreground shadow-sm transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
             <BookOpen className="h-5 w-5" />
@@ -27,7 +25,6 @@ export default function CourseCard({ course }: CourseCardProps) {
           </span>
         </div>
 
-        {/* Content Text */}
         <div className="mt-5 space-y-2">
           <h3 className="font-bold text-foreground group-hover:text-primary transition-colors text-lg">
             {course.title}
@@ -38,7 +35,6 @@ export default function CourseCard({ course }: CourseCardProps) {
         </div>
       </div>
 
-      {/* Technical Footer: Dashed Top Border */}
       <div className="mt-auto flex items-center justify-end border-t border-dashed border-border bg-muted/30 px-6 py-4">
         <Link
           to={`/courses/${course.id}`}

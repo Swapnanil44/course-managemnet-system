@@ -17,10 +17,8 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        {/* We wrap everything in a div that handles the full height and background */}
         <div className="min-h-screen bg-background text-foreground flex flex-col">
           <Navbar />
-          {/* flex-1 ensures the main content takes up remaining space pushing footer down if you had one */}
           <main className="flex-1">
             <Routes>
               {/* Public routes */}

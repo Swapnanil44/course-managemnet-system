@@ -21,7 +21,7 @@ export default function Navbar() {
     navigate("/login");
   };
 
-  // Helper to get initials
+  
   const getInitials = (name?: string) => {
     if (!name) return "U";
     return name
@@ -35,7 +35,7 @@ export default function Navbar() {
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-zinc-200/60 bg-white/80 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        {/* 1. Logo / Brand: Matching the Login Page Style */}
+        
         <Link to="/" className="flex items-center gap-2 group">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-zinc-900 text-white shadow-lg shadow-zinc-900/20 group-hover:bg-zinc-800 transition-colors">
             <Command className="h-4 w-4" />
@@ -45,11 +45,11 @@ export default function Navbar() {
           </span>
         </Link>
 
-        {/* Right Side Actions */}
+        
         <div className="flex items-center gap-6">
           {user ? (
             <>
-              {/* Role-Based Links - Minimalist Text Links */}
+              
               <div className="hidden md:flex items-center gap-6 text-sm font-medium">
                 {user.role === "INSTRUCTOR" ? (
                   <Link
@@ -70,7 +70,7 @@ export default function Navbar() {
                 )}
               </div>
 
-              {/* User Profile Dropdown */}
+              
               <div className="flex items-center gap-4 pl-6 border-l border-zinc-200">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
@@ -124,7 +124,7 @@ export default function Navbar() {
               </div>
             </>
           ) : (
-            /* Guest View */
+            
             <div className="flex items-center gap-4">
               <Link
                 to="/login"

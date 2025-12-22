@@ -52,12 +52,12 @@ export default function RegisterPage() {
 
   return (
     <div className="flex min-h-screen w-full items-center justify-center bg-white relative isolate p-4">
-      {/* Background Pattern */}
+     
       <div className="absolute inset-0 -z-10 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] bg-size-[16px_16px] mask-[radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)]"></div>
 
       <Card className="w-full max-w-110 border border-zinc-200/60 bg-white shadow-[0px_0px_0px_1px_rgba(9,9,11,0.02),0px_1px_1px_-0.5px_rgba(9,9,11,0.02),0px_3px_3px_-1.5px_rgba(9,9,11,0.02),_0px_6px_6px_-3px_rgba(9,9,11,0.02),0px_12px_12px_-6px_rgba(9,9,11,0.02),0px_24px_24px_-12px_rgba(9,9,11,0.02)] rounded-2xl">
         
-        {/* Compact Header */}
+       
         <CardHeader className="space-y-1 pb-2 pt-2 text-center">
           <div className="mx-auto mb-3 flex h-9 w-9 items-center justify-center rounded-lg bg-zinc-900 text-white shadow-lg shadow-zinc-900/20">
             <Command className="h-4 w-4" />
@@ -73,7 +73,7 @@ export default function RegisterPage() {
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
             
-            {/* Full Name */}
+            
             <div className="space-y-1.5">
               <Label htmlFor="name" className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 ml-0.5">
                 Full Name
@@ -90,7 +90,7 @@ export default function RegisterPage() {
               {errors.name && <p className="text-[10px] font-medium text-red-600 mt-1 pl-1">{errors.name.message}</p>}
             </div>
 
-            {/* Email */}
+           
             <div className="space-y-1.5">
               <Label htmlFor="email" className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 ml-0.5">
                 Email
@@ -108,7 +108,7 @@ export default function RegisterPage() {
               {errors.email && <p className="text-[10px] font-medium text-red-600 mt-1 pl-1">{errors.email.message}</p>}
             </div>
 
-            {/* Password */}
+           
             <div className="space-y-1.5">
               <Label htmlFor="password" className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 ml-0.5">
                 Password
@@ -133,7 +133,7 @@ export default function RegisterPage() {
               {errors.password && <p className="text-[10px] font-medium text-red-600 mt-1 pl-1">{errors.password.message}</p>}
             </div>
 
-            {/* Role - Stacked vertically now */}
+            
             <div className="space-y-1.5">
               <Label htmlFor="role" className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 ml-0.5">
                 Account Type

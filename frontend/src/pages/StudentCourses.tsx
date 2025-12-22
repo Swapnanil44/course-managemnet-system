@@ -24,11 +24,11 @@ export default function StudentCourses() {
 
   return (
     <div className="min-h-screen bg-white relative isolate p-8">
-      {/* Background Pattern */}
+      
       <div className="absolute inset-0 -z-10 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] bg-size-[16px_16px] `mask-[radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)]"></div>
 
       <div className="mx-auto max-w-6xl">
-        {/* Header Section */}
+       
         <div className="mb-10 flex flex-col gap-1">
           <h1 className="text-3xl font-bold tracking-tight text-foreground">
             Explore Courses
@@ -38,7 +38,7 @@ export default function StudentCourses() {
           </p>
         </div>
 
-        {/* Grid Section */}
+        
         {isLoading ? (
           <CoursesSkeleton />
         ) : (
@@ -57,7 +57,7 @@ export default function StudentCourses() {
   );
 }
 
-// Sub-component: Skeleton Loader (Updated to match card height)
+
 function CoursesSkeleton() {
   return (
     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -81,7 +81,7 @@ function CoursesSkeleton() {
   );
 }
 
-// Sub-component: Empty State
+
 function EmptyState() {
   return (
     <div className="col-span-full flex flex-col items-center justify-center rounded-2xl border border-dashed border-border bg-card/50 py-20 text-center">

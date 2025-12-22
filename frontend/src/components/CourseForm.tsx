@@ -8,21 +8,18 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-// Types
 export interface Course {
   id: number;
   title: string;
   description: string;
 }
 
-// Props Definition
 interface CourseFormProps {
   initialData: Course | null;
   onCancel: () => void;
   onSuccess: () => void;
 }
 
-// Validation Schema
 const courseSchema = z.object({
   title: z.string().min(3, "Title is too short"),
   description: z.string().min(10, "Description must be at least 10 characters"),
@@ -30,7 +27,11 @@ const courseSchema = z.object({
 
 type CourseFormInputs = z.infer<typeof courseSchema>;
 
-export default function CourseForm({ initialData, onCancel, onSuccess }: CourseFormProps) {
+export default function CourseForm({
+  initialData,
+  onCancel,
+  onSuccess,
+}: CourseFormProps) {
   const {
     register,
     handleSubmit,
@@ -44,7 +45,6 @@ export default function CourseForm({ initialData, onCancel, onSuccess }: CourseF
     },
   });
 
-  // Reset form when switching between "Edit" and "Create" modes
   useEffect(() => {
     if (initialData) {
       reset({ title: initialData.title, description: initialData.description });
@@ -56,13 +56,11 @@ export default function CourseForm({ initialData, onCancel, onSuccess }: CourseF
   const onSubmit = async (data: CourseFormInputs) => {
     try {
       if (initialData) {
-        // Edit Mode
         await api.patch(`/courses/${initialData.id}`, data);
       } else {
-        // Create Mode
         await api.post("/courses", data);
       }
-      onSuccess(); 
+      onSuccess();
     } catch (error) {
       console.error("Operation failed", error);
       alert("Failed to save course");
@@ -71,14 +69,15 @@ export default function CourseForm({ initialData, onCancel, onSuccess }: CourseF
 
   return (
     <div className="w-full">
-      {/* Header Section */}
       <div className="mb-6 flex items-center justify-between">
         <div>
           <h2 className="text-lg font-bold tracking-tight text-zinc-900">
             {initialData ? "Edit Course" : "Create New Course"}
           </h2>
           <p className="text-sm text-zinc-500">
-            {initialData ? "Update the course details below." : "Fill in the details to create a new course."}
+            {initialData
+              ? "Update the course details below."
+              : "Fill in the details to create a new course."}
           </p>
         </div>
         <button
@@ -90,10 +89,11 @@ export default function CourseForm({ initialData, onCancel, onSuccess }: CourseF
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-        
-        {/* Course Title Field */}
         <div className="space-y-1.5">
-          <Label htmlFor="title" className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 ml-0.5">
+          <Label
+            htmlFor="title"
+            className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 ml-0.5"
+          >
             Course Title
           </Label>
           <div className="relative group">
@@ -106,13 +106,17 @@ export default function CourseForm({ initialData, onCancel, onSuccess }: CourseF
             />
           </div>
           {errors.title && (
-            <p className="text-[10px] font-medium text-red-600 pl-1 mt-1">{errors.title.message}</p>
+            <p className="text-[10px] font-medium text-red-600 pl-1 mt-1">
+              {errors.title.message}
+            </p>
           )}
         </div>
 
-        {/* Description Field */}
         <div className="space-y-1.5">
-          <Label htmlFor="description" className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 ml-0.5">
+          <Label
+            htmlFor="description"
+            className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 ml-0.5"
+          >
             Description
           </Label>
           <div className="relative group">
@@ -126,11 +130,12 @@ export default function CourseForm({ initialData, onCancel, onSuccess }: CourseF
             />
           </div>
           {errors.description && (
-            <p className="text-[10px] font-medium text-red-600 pl-1 mt-1">{errors.description.message}</p>
+            <p className="text-[10px] font-medium text-red-600 pl-1 mt-1">
+              {errors.description.message}
+            </p>
           )}
         </div>
 
-        {/* Action Buttons */}
         <div className="flex justify-end gap-3 pt-2">
           <Button
             type="button"

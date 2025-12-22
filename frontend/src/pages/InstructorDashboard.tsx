@@ -3,7 +3,7 @@ import { api } from "../lib/api";
 import { Plus, Trash2, Edit2, BookOpen, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import CourseForm, { type Course } from "../components/CourseForm";
-import { Button } from "@/components/ui/button"; // Assuming you have shadcn button
+import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 
 export default function InstructorDashboard() {
@@ -57,11 +57,9 @@ export default function InstructorDashboard() {
 
   return (
     <div className="min-h-screen bg-white relative isolate p-8">
-      {/* Background Pattern */}
       <div className="absolute inset-0 -z-10 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] bg-size-[16px_16px] mask-[radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)]"></div>
 
       <div className="mx-auto max-w-6xl">
-        {/* Header Section */}
         <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="space-y-1">
             <h1 className="text-3xl font-bold tracking-tight text-zinc-950">
@@ -91,7 +89,6 @@ export default function InstructorDashboard() {
           </div>
         )}
 
-        {/* Course Grid */}
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {courses.map((course) => (
             <Card
@@ -99,7 +96,6 @@ export default function InstructorDashboard() {
               className="group relative flex flex-col justify-between overflow-hidden rounded-xl border border-zinc-200 bg-white transition-all duration-300 hover:border-zinc-300 hover:shadow-lg hover:shadow-zinc-200/50"
             >
               <div className="flex flex-col p-6">
-                {/* Top Row: Icon + ID Badge */}
                 <div className="flex items-start justify-between">
                   <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-zinc-100 bg-zinc-50 text-zinc-900 shadow-sm transition-colors group-hover:bg-zinc-100 group-hover:text-black">
                     <BookOpen className="h-5 w-5" />
@@ -109,7 +105,6 @@ export default function InstructorDashboard() {
                   </span>
                 </div>
 
-                {/* Content */}
                 <div className="mt-5 space-y-2">
                   <h3 className="font-bold text-zinc-900 group-hover:text-black transition-colors text-lg">
                     {course.title}
@@ -120,9 +115,7 @@ export default function InstructorDashboard() {
                 </div>
               </div>
 
-              {/* Technical Footer: Dashed Top Border + Action Layout */}
               <div className="mt-auto flex items-center justify-between border-t border-dashed border-zinc-200 bg-zinc-50/50 px-6 py-4">
-                {/* Secondary Actions (Left) */}
                 <div className="flex gap-3">
                   <button
                     onClick={() => handleEditClick(course)}
@@ -131,7 +124,7 @@ export default function InstructorDashboard() {
                   >
                     <Edit2 className="h-4 w-4" />
                   </button>
-                  <div className="h-4 w-px bg-zinc-200" /> {/* Divider */}
+                  <div className="h-4 w-px bg-zinc-200" />
                   <button
                     onClick={() => handleDelete(course.id)}
                     className="text-zinc-400 hover:text-red-600 transition-colors"
@@ -141,7 +134,6 @@ export default function InstructorDashboard() {
                   </button>
                 </div>
 
-                {/* Primary Action (Right) */}
                 <Link
                   to={`/dashboard/courses/${course.id}`}
                   className="inline-flex items-center gap-2 rounded-full bg-zinc-900 px-4 py-1.5 text-xs font-semibold text-white shadow-sm transition-transform active:scale-95 hover:bg-zinc-800"

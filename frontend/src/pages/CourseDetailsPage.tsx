@@ -7,7 +7,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { AlertCircle, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-// Page-specific type
 interface CourseDetails {
   id: number;
   title: string;
@@ -42,14 +41,13 @@ export default function CourseDetailsPage() {
   if (loading) {
     return (
       <div className="flex h-[calc(100vh-4rem)]">
-        {/* Sidebar Skeleton */}
         <div className="w-80 border-r border-border bg-card p-6 space-y-4 hidden md:block">
           <Skeleton className="h-8 w-3/4 mb-6" />
           <Skeleton className="h-10 w-full" />
           <Skeleton className="h-10 w-full" />
           <Skeleton className="h-10 w-full" />
         </div>
-        {/* Main Content Skeleton */}
+
         <div className="flex-1 p-8 space-y-6">
           <Skeleton className="h-12 w-1/2" />
           <Skeleton className="h-100 w-full rounded-xl" />
@@ -77,7 +75,6 @@ export default function CourseDetailsPage() {
 
   return (
     <div className="flex h-[calc(100vh-3.5rem)] overflow-hidden bg-background">
-      {/* SIDEBAR */}
       <CourseSidebar
         courseTitle={course.title}
         lessons={course.lessons}
@@ -85,9 +82,7 @@ export default function CourseDetailsPage() {
         onSelectLesson={setActiveLessonId}
       />
 
-      {/* MAIN CONTENT AREA */}
       <main className="relative flex-1 overflow-y-auto">
-        {/* Dotted Background - Applied only to the content area */}
         <div className="absolute inset-0 -z-10 h-full w-full bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] bg-size-[16px_16px] mask-[radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)]"></div>
 
         <div className="mx-auto max-w-4xl p-6 md:p-10">

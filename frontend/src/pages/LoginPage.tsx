@@ -72,12 +72,12 @@ export default function LoginPage() {
       <div className="absolute inset-0 -z-10 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] bg-size-[16px_16px] mask-[radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)]"></div>
 
       <Card className="w-full max-w-105 border border-zinc-200/60 bg-white shadow-[0px_0px_0px_1px_rgba(9,9,11,0.02),0px_1px_1px_-0.5px_rgba(9,9,11,0.02),0px_3px_3px_-1.5px_rgba(9,9,11,0.02),0px_6px_6px_-3px_rgba(9,9,11,0.02),0px_12px_12px_-6px_rgba(9,9,11,0.02),0px_24px_24px_-12px_rgba(9,9,11,0.02)] rounded-2xl">
-        {/* Reduced padding top/bottom and logo margin */}
+        
         <CardHeader className="space-y-1 pb-4 pt-2 text-center">
           <div className="mx-auto mb-3 flex h-9 w-9 items-center justify-center rounded-lg bg-zinc-900 text-white shadow-lg shadow-zinc-900/20">
             <Command className="h-4 w-4" />
           </div>
-          {/* Smaller Title */}
+          
           <h2 className="text-2xl font-bold tracking-tight text-zinc-950">
             Welcome back
           </h2>
@@ -87,7 +87,7 @@ export default function LoginPage() {
         </CardHeader>
 
         <CardContent>
-          {/* Tighter space-y */}
+          
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="space-y-1.5">
               <Label htmlFor="email" className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 ml-0.5">
@@ -145,7 +145,7 @@ export default function LoginPage() {
           </form>
         </CardContent>
 
-        {/* Reduced Footer Padding */}
+        
         <CardFooter className="flex justify-center pb-6 pt-0">
           <p className="text-xs text-zinc-500">
             Don&apos;t have an account?{" "}
